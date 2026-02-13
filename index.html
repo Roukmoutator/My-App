@@ -4,24 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JMM APP - Login</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <style>
         :root { --bg: #f4f7f9; --card: #fff; --text: #333; --input: #fff; --border: #ddd; --link: #007bff; }
         [data-theme="dark"] { --bg: #1a1a1a; --card: #2d2d2d; --text: #f4f7f9; --input: #3d3d3d; --border: #555; --link: #4dabff; }
         body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; transition: 0.3s; }
-        .login-card { background: var(--card); padding: 2.5rem; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); width: 320px; text-align: center; }
-        .logo { width: 70px; margin-bottom: 10px; }
+        
+        .login-card { background: var(--card); padding: 2.5rem; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); width: 320px; text-align: center; position: relative;}
+        
+        /* New Logo Styling using an Icon Font */
+        .logo-icon { 
+            font-size: 60px; 
+            color: #007bff; 
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
         input { width: 100%; padding: 12px; margin: 8px 0; background: var(--input); color: var(--text); border: 1px solid var(--border); border-radius: 6px; box-sizing: border-box; }
         .error-border { border: 2px solid #ff4d4d !important; }
         button { width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px; }
-        .theme-switch { position: absolute; top: 20px; right: 20px; cursor: pointer; padding: 10px; background: var(--card); border-radius: 50px; font-size: 0.8rem; }
+        
+        .theme-switch { position: absolute; top: 20px; right: 20px; cursor: pointer; padding: 10px; background: var(--card); border-radius: 50px; font-size: 0.8rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1);}
         .extra-links { margin-top: 15px; font-size: 0.85rem; }
         #error-msg { color: #ff4d4d; font-size: 0.75rem; display: none; margin-bottom: 5px; }
     </style>
 </head>
 <body>
     <div class="theme-switch" onclick="toggleTheme()"><span id="theme-icon">🌙 Dark Mode</span></div>
+    
     <div class="login-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968204.png" alt="Logo" class="logo">
+        <span class="material-icons logo-icon">account_circle</span>
+        
         <h1>JMM APP</h1>
         <div id="error-msg">Please fill in all fields.</div>
         <input type="text" id="user-input" placeholder="Username">
@@ -29,8 +42,13 @@
         <button onclick="handleLogin()">Login</button>
         <div class="extra-links">Don't have an account? <a href="signup.html" style="color:var(--link)">Sign Up</a></div>
     </div>
+
     <script>
-        if (localStorage.getItem('theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); document.getElementById('theme-icon').innerHTML = "☀️ Light Mode"; }
+        if (localStorage.getItem('theme') === 'dark') { 
+            document.documentElement.setAttribute('data-theme', 'dark'); 
+            document.getElementById('theme-icon').innerHTML = "☀️ Light Mode"; 
+        }
+
         function toggleTheme() {
             const body = document.documentElement;
             const isDark = body.getAttribute('data-theme') === 'dark';
@@ -38,9 +56,18 @@
             localStorage.setItem('theme', isDark ? 'light' : 'dark');
             document.getElementById('theme-icon').innerHTML = isDark ? "🌙 Dark Mode" : "☀️ Light Mode";
         }
+
         function handleLogin() {
-            const u = document.getElementById('user-input'), p = document.getElementById('pass-input'), e = document.getElementById('error-msg');
-            if (!u.value.trim() || !p.value.trim()) { e.style.display='block'; u.classList.add('error-border'); p.classList.add('error-border'); return; }
+            const u = document.getElementById('user-input'), 
+                  p = document.getElementById('pass-input'), 
+                  e = document.getElementById('error-msg');
+            
+            if (!u.value.trim() || !p.value.trim()) { 
+                e.style.display='block'; 
+                u.classList.add('error-border'); 
+                p.classList.add('error-border'); 
+                return; 
+            }
             window.location.href = "home.html";
         }
     </script>
